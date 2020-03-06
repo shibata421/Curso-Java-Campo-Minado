@@ -7,13 +7,18 @@ import org.junit.jupiter.api.Test;
 
 import br.com.cod3r.cm.excecao.ExplosaoException;
 
-public class CampoTeste {
+public class CampoMinadoTeste {
 
 	private Campo campo; 
 	
 	@BeforeEach
 	void iniciarCampo() {
 		campo = new Campo(3, 3);
+	}
+	
+	@BeforeEach
+	void iniciarTabuleiro() {
+		Tabuleiro tabuleiro = new Tabuleiro(10, 10, 10);
 	}
 	
 	@Test
