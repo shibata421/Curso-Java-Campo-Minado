@@ -21,6 +21,20 @@ public class Tabuleiro {
 		associarOsVizinhos();
 		sortearMinas();
 	}
+	
+	public void abrir(int linha, int coluna) {
+		campos.parallelStream()
+			.filter(c -> c.getLinha() == linha && c.getColuna() == coluna)
+			.findFirst()
+			.ifPresent(c -> c.abrir());
+	}
+	
+	public void alterarMarcacao(int linha, int coluna) {
+		campos.parallelStream()
+		.filter(c -> c.getLinha() == linha && c.getColuna() == coluna)
+		.findFirst()
+		.ifPresent(c -> c.alternarMarcacao());
+	}
 
 	private void gerarCampos() {
 		for (int i = 0; i < linhas; i++) {
@@ -53,7 +67,6 @@ public class Tabuleiro {
 		return campos;
 	}
 
-
 	public boolean objetivoAlcancado() {
 		return campos.stream().allMatch(c -> c.objetivoAlcancado());
 	}
@@ -63,7 +76,30 @@ public class Tabuleiro {
 		sortearMinas();
 	}
 	
-//	public String toString() {
-//		
-//	}
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("   ");
+		
+		for (int j = 0; j < colunas; j++) {
+			sb.append(j);
+			sb.append("  ");
+		}
+		
+		sb.append("\n");
+		
+		int x = 0;
+		for (int i = 0; i < linhas; i++) {
+			sb.append(i);
+			sb.append(" ");
+			for (int j = 0; j < colunas; j++) {
+				sb.append(" ");
+				sb.append(campos.get(x));
+				sb.append(" ");
+				x++;
+			}
+			sb.append("\n");
+		}
+		
+		return sb.toString();
+	}
 }

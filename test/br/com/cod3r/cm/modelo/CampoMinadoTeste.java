@@ -244,4 +244,38 @@ public class CampoMinadoTeste {
 		tabuleiro.reiniciar();
 		assertTrue(tabuleiro.getCampos().stream().allMatch(c -> c.isFechado()));
 	}
+	
+	@Test
+	void testeTabuleiroAbrirCampo() {
+		for (int i = 0; i < tabuleiro.getCampos().size(); i++) {
+			Campo campo = tabuleiro.getCampos().get(i);
+			if (!campo.isMinado()) {
+				tabuleiro.abrir(campo.getLinha(), campo.getColuna());
+			}
+		}
+		assertTrue(tabuleiro.getCampos().stream()
+				.filter(c -> !c.isMinado())
+				.allMatch(c -> c.isAberto()));
+	}
+	
+	@Test
+	void testeTabuleiroAlterarMarcacao() {
+		for (int i = 0; i < tabuleiro.getCampos().size(); i++) {
+			Campo campo = tabuleiro.getCampos().get(i);
+			if (campo.isMinado()) {
+				tabuleiro.alterarMarcacao(campo.getLinha(), campo.getColuna());
+			}
+		}
+		assertTrue(tabuleiro.getCampos().stream()
+				.filter(c -> c.isMinado())
+				.allMatch(c -> c.isMarcado()));
+	}
+	
+	@Test
+	void testeTabuleiroToString() {
+		tabuleiro = new Tabuleiro(3, 3, 0);
+		assertEquals(" ?  ?  ? \n ?  ?  ? \n ?  ?  ? \n", tabuleiro.toString());
+	}
+	
+	
 }
