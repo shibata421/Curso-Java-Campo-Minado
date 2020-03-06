@@ -10,6 +10,7 @@ import br.com.cod3r.cm.excecao.ExplosaoException;
 public class CampoMinadoTeste {
 
 	private Campo campo; 
+	private Tabuleiro tabuleiro;
 	
 	@BeforeEach
 	void iniciarCampo() {
@@ -18,7 +19,7 @@ public class CampoMinadoTeste {
 	
 	@BeforeEach
 	void iniciarTabuleiro() {
-		Tabuleiro tabuleiro = new Tabuleiro(10, 10, 10);
+		tabuleiro = new Tabuleiro(10, 10, 10);
 	}
 	
 	@Test
@@ -223,5 +224,24 @@ public class CampoMinadoTeste {
 	@Test
 	void testeToString5() {
 		assertEquals("?", campo.toString());
+	}
+	
+	@Test
+	void testeTabuleiroObjetivoAlcacando() {
+		for (int i = 0; i < tabuleiro.getCampos().size(); i++) {
+			Campo campo = tabuleiro.getCampos().get(i);
+			if(campo.isMinado()) {
+				campo.alternarMarcacao();;
+			} else {
+				campo.abrir();
+			}
+		}
+		assertTrue(tabuleiro.objetivoAlcancado());
+	}
+	
+	@Test
+	void testeTabuleiroReiniciar() {
+		tabuleiro.reiniciar();
+		assertTrue(tabuleiro.getCampos().stream().allMatch(c -> c.isFechado()));
 	}
 }
